@@ -87,30 +87,30 @@
                 </div>
             </div>
 
-            <!-- Panel 1: Input Token -->
+            <!-- Panel 1: Input userId -->
             <div id="panel1" class="panel active">
                 <div class="bg-indigo-50 rounded-xl p-5 mb-6 border border-indigo-100">
                     <div class="flex items-center space-x-3 mb-2">
-                        <i data-lucide="key" class="text-indigo-600 w-5 h-5"></i>
-                        <label for="token" class="text-gray-700 font-semibold text-sm uppercase tracking-wide">Token Ujian</label>
+                        <i data-lucide="user" class="text-indigo-600 w-5 h-5"></i>
+                        <label for="userId" class="text-gray-700 font-semibold text-sm tracking-wide">User ID</label>
                     </div>
                     
                     <div class="relative">
-                        <input type="text" id="token"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono uppercase placeholder-gray-400"
+                        <input type="text" id="userId"
+                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono placeholder-gray-400"
                             placeholder="X X X X X">
                     </div>
-                    <p id="tokenErrorMessage" class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"></p>
+                    <p id="userIdErrorMessage" class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"></p>
                 </div>
 
-                <button onclick="verifyToken()"
+                <button onclick="verifyUserId()"
                     class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5 flex justify-center items-center space-x-2">
-                    <span>Verifikasi Token</span>
+                    <span>Verifikasi</span>
                     <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </button>
             </div>
 
-            <!-- Panel 2: Informasi Siswa dan Input Kode -->
+            <!-- Panel 2: Informasi Siswa dan Input Kode Soal -->
             <div id="panel2" class="panel hidden">
                 <div class="text-center mb-4">
                     <h2 class="text-lg font-bold text-gray-800">Konfirmasi Data</h2>
@@ -125,22 +125,22 @@
                     </div>
                 </div>
 
-                <!-- Input Kode Login -->
+                <!-- Input Kode Soal -->
                 <div class="mb-4">
-                    <label for="kode" class="block text-gray-700 font-semibold text-sm mb-2">Kode Login</label>
+                    <label for="kodeSoal" class="block text-gray-700 font-semibold uppercase text-sm mb-2">Kode Soal</label>
                     <div class="relative">
                         <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="lock" class="text-gray-400 w-4 h-4"></i>
+                            <i data-lucide="Key" class="text-gray-400 w-4 h-4"></i>
                         </div>
-                        <input type="text" id="kode"
+                        <input type="text" id="kodeSoal"
                             class="w-full pl-10 pr-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all placeholder-gray-400"
-                            placeholder="Masukkan Kode Login">
+                            placeholder="Masukkan Kode Soal">
                     </div>
-                    <p id="kodeErrorMessage" class="text-red-500 text-xs mt-2 font-medium min-h-[1rem]"></p>
+                    <p id="kodeSoalErrorMessage" class="text-red-500 text-xs mt-2 font-medium min-h-[1rem]"></p>
                 </div>
 
                 <div class="space-y-3">
-                    <button onclick="verifyKode()"
+                    <button onclick="verifyKodeSoal()"
                         class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition-all flex justify-center items-center space-x-2">
                         <span>Mulai Ujian</span>
                         <i data-lucide="play-circle" class="w-4 h-4"></i>
@@ -166,6 +166,7 @@
         class="hidden fixed inset-0 flex flex-col items-center justify-center bg-indigo-900/80 backdrop-blur-sm z-50 transition-opacity">
         <span class="loader"></span>
         <p class="text-white mt-4 font-medium tracking-wide animate-pulse">Memproses Data...</p>
+        <p class="text-xs text-indigo-200 mt-2">Memeriksa jadwal dan kode soal...</p>
     </div>
 
     <!-- JAVASCRIPT LOGIC (TIDAK DIRUBAH LOGIKANYA) -->
@@ -179,7 +180,7 @@
 
         async function loadSiswaData() {
             try {
-                const response = await fetch('https://masozin.github.io/asesmen-mtsnf/data.json'); 
+                const response = await fetch('https://masozin.github.io/portal-cbt-mtsnf/data.json'); 
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
@@ -191,23 +192,23 @@
             }
         }
 
-        function verifyToken() {
-            const token = document.getElementById('token').value.trim();
-            const errorMessage = document.getElementById('tokenErrorMessage');
+        function verifyUserId() {
+            const userId = document.getElementById('userId').value.trim();
+            const errorMessage = document.getElementById('userIdErrorMessage');
             const studentInfo = document.getElementById('studentInfo');
 
             errorMessage.textContent = '';
             studentInfo.innerHTML = '';
 
-            if (!token) {
-                errorMessage.textContent = "Token tidak boleh kosong.";
+            if (!userId) {
+                errorMessage.textContent = "userId tidak boleh kosong.";
                 // Efek getar jika error
-                document.getElementById('token').classList.add('ring-2', 'ring-red-500');
-                setTimeout(() => document.getElementById('token').classList.remove('ring-2', 'ring-red-500'), 500);
+                document.getElementById('userId').classList.add('ring-2', 'ring-red-500');
+                setTimeout(() => document.getElementById('userId').classList.remove('ring-2', 'ring-red-500'), 500);
                 return;
             }
 
-            const siswa = siswaData.find(s => s.token === token);
+            const siswa = siswaData.find(s => s.userId === userId);
 
             if (siswa) {
                 // SAYA PERBAIKI TAMPILAN INJECT HTML AGAR RAPI
@@ -235,20 +236,19 @@
                 }, 300); // Wait for transition
                 
             } else {
-                errorMessage.textContent = "Token tidak ditemukan / Salah.";
-                document.getElementById('token').classList.add('ring-2', 'ring-red-500');
-                setTimeout(() => document.getElementById('token').classList.remove('ring-2', 'ring-red-500'), 500);
+                errorMessage.textContent = "User ID tidak ditemukan / Salah.";
+                document.getElementById('userId').classList.add('ring-2', 'ring-red-500');
+                setTimeout(() => document.getElementById('userId').classList.remove('ring-2', 'ring-red-500'), 500);
             }
         }
 
-        async function verifyKode() {
-            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbzO9siJBod2QZG-qD2NiOkdmnW49VfRNqMej-OiO9zoiuNR5X_o0NFxsqx4FZzIwQCt/exec';
+        async function verifyKodeSoal() {
+            // Ganti URL ini dengan URL Deployment Baru Anda
+            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbz-uJo0Ad109oOxcJZzjehFM62frcAJs5dxw6cD_Qb9N4-JpvfOYlANtE-X-0rM2crftQ/exec';
 
-            const kode = document.getElementById('kode').value.trim();
-            const token = document.getElementById('token').value.trim();
+            const kodeSoal = document.getElementById('kodeSoal').value.trim();
+            const userId = document.getElementById('userId').value.trim();
             
-            // Perlu mengambil textContent karena elemen ini di-generate ulang
-            // Pastikan elemen sudah ada (sudah verifyToken)
             const kelasEl = document.getElementById('kelas');
             const namaEl = document.getElementById('nama');
             const nisnEl = document.getElementById('nisn');
@@ -259,15 +259,15 @@
             const nama = namaEl.textContent.trim();
             const nisn = nisnEl.textContent.trim();
 
-            document.getElementById('kodeErrorMessage').textContent = "";
+            document.getElementById('kodeSoalErrorMessage').textContent = "";
 
-            if (!kode) {
-                document.getElementById('kodeErrorMessage').textContent = "Kode Login tidak boleh kosong.";
+            if (!kodeSoal) {
+                document.getElementById('kodeSoalErrorMessage').textContent = "Kode Soal tidak boleh kosong.";
                 return;
             }
 
             const studentData = {
-                token,
+                userId,
                 nama,
                 kelas,
                 nisn,
@@ -277,24 +277,38 @@
 
             try {
                 const response = await fetch(
-                    `${googleScriptUrl}?action=getFormLink&token=${token}&kode=${kode}&studentData=${encodeURIComponent(JSON.stringify(studentData))}`
+                    `${googleScriptUrl}?action=getFormLink&userId=${userId}&kodeSoal=${kodeSoal}&studentData=${encodeURIComponent(JSON.stringify(studentData))}`
                 );
 
                 const result = await response.json();
 
                 hideSpinner();
 
+                // --- FITUR DEBUGGING BARU ---
+                // Jika script mengirim data debug, tampilkan di Console Browser (Tekan F12 -> Console)
+                if (result.debug) {
+                    console.group("DEBUGGING SERVER TIME");
+                    result.debug.forEach(log => console.log(log));
+                    console.groupEnd();
+                    
+                    // Opsional: Uncomment baris bawah ini jika ingin melihat log via Pop-up Alert
+                    // alert(result.debug.join('\n'));
+                }
+                // -----------------------------
+
                 if (result.link) {
                     window.location.href = result.link;
                 } else if (result.error) {
-                    document.getElementById('kodeErrorMessage').textContent = result.error;
+                    document.getElementById('kodeSoalErrorMessage').textContent = result.error;
+                    document.getElementById('kodeSoal').classList.add('ring-2', 'ring-red-500');
+                    setTimeout(() => document.getElementById('kodeSoal').classList.remove('ring-2', 'ring-red-500'), 500);
                 } else {
-                    document.getElementById('kodeErrorMessage').textContent = "Maaf, terjadi kesalahan tidak diketahui.";
+                    document.getElementById('kodeSoalErrorMessage').textContent = "Kesalahan tidak diketahui.";
                 }
             } catch (error) {
                 console.error("Error:", error);
                 hideSpinner();
-                document.getElementById('kodeErrorMessage').textContent = "Terjadi kesalahan server/koneksi.";
+                document.getElementById('kodeSoalErrorMessage').textContent = "Terjadi kesalahan server/koneksi.";
             }
         }
 
@@ -318,9 +332,9 @@
                 p1.classList.add('active');
             }, 300);
             
-            // Reset input kode dan error message saat kembali
-            document.getElementById('kode').value = '';
-            document.getElementById('kodeErrorMessage').textContent = '';
+            // Reset input Kode Soal dan error message saat kembali
+            document.getElementById('kodeSoal').value = '';
+            document.getElementById('kodeSoalErrorMessage').textContent = '';
         }
 
         document.addEventListener('DOMContentLoaded', loadSiswaData);
