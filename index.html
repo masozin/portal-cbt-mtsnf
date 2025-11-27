@@ -98,7 +98,7 @@
                     <div class="relative">
                         <input type="text" id="userId"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono placeholder-gray-400"
-                            placeholder="X X X X X">
+                            placeholder="masukan User ID">
                     </div>
                     <p id="userIdErrorMessage" class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"></p>
                 </div>
@@ -297,7 +297,22 @@
                 // -----------------------------
 
                 if (result.link) {
-                    window.location.href = result.link;
+                    // Cek apakah Flutter/ClickDetector tersedia
+					if (typeof ClickDetector !== 'undefined' && result.duration) {
+						// Kirim data durasi ke Flutter dalam format JSON String
+						// Contoh: '{"type": "START_EXAM", "duration": 5400}'
+						var message = JSON.stringify({
+							type: 'START_EXAM',
+							duration: result.duration
+						});
+						console.log("Mengirim durasi ke Flutter: " + result.duration);
+						ClickDetector.postMessage(message);
+					}
+
+					// Beri jeda sedikit agar Flutter sempat memproses pesan sebelum redirect
+					setTimeout(function() {
+						window.location.href = result.link;
+					}, 500);
                 } else if (result.error) {
                     document.getElementById('kodeSoalErrorMessage').textContent = result.error;
                     document.getElementById('kodeSoal').classList.add('ring-2', 'ring-red-500');
