@@ -92,13 +92,13 @@
                 <div class="bg-indigo-50 rounded-xl p-5 mb-6 border border-indigo-100">
                     <div class="flex items-center space-x-3 mb-2">
                         <i data-lucide="user" class="text-indigo-600 w-5 h-5"></i>
-                        <label for="userId" class="text-gray-700 font-semibold text-sm tracking-wide">User ID</label>
+                        <label for="userId" class="text-gray-700 font-semibold text-sm tracking-wide">ID Peserta</label>
                     </div>
                     
                     <div class="relative">
                         <input type="text" id="userId"
                             class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono placeholder-gray-400"
-                            placeholder="masukan User ID">
+                            placeholder="masukan ID Peserta">
                     </div>
                     <p id="userIdErrorMessage" class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"></p>
                 </div>
@@ -236,7 +236,7 @@
                 }, 300); // Wait for transition
                 
             } else {
-                errorMessage.textContent = "User ID tidak ditemukan / Salah.";
+                errorMessage.textContent = "ID Peserta tidak ditemukan / Salah.";
                 document.getElementById('userId').classList.add('ring-2', 'ring-red-500');
                 setTimeout(() => document.getElementById('userId').classList.remove('ring-2', 'ring-red-500'), 500);
             }
@@ -295,7 +295,7 @@
                     // alert(result.debug.join('\n'));
                 }
                 // -----------------------------
-
+                
                 if (result.link) {
                     // Cek apakah Flutter/ClickDetector tersedia
 					if (typeof ClickDetector !== 'undefined' && result.duration) {
@@ -308,6 +308,8 @@
 						console.log("Mengirim durasi ke Flutter: " + result.duration);
 						ClickDetector.postMessage(message);
 					}
+
+                    console.log("Mengirim durasi ke Flutter: " + result.duration);
 
 					// Beri jeda sedikit agar Flutter sempat memproses pesan sebelum redirect
 					setTimeout(function() {
