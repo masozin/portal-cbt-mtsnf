@@ -1,219 +1,292 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MTs Nurul Falah - CBT Login</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Google Fonts (Poppins) untuk tampilan modern -->
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <!-- Lucide Icons (Untuk ikon yang konsisten) -->
     <script src="https://unpkg.com/lucide@latest"></script>
-    <link rel="icon" type="image/png" href="yppmu 60px.png">
+    <link rel="icon" type="image/png" href="yppmu 60px.png" />
 
     <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-        
-        /* Animasi Transisi Halus */
-        .panel {
-            transition: all 0.3s ease-in-out;
-            opacity: 0;
-            transform: translateY(10px);
-            display: none; /* Default hidden controlled by JS classes but augmented by CSS */
-        }
+      body {
+        font-family: "Poppins", sans-serif;
+      }
 
-        .panel.active {
-            display: block;
-            opacity: 1;
-            transform: translateY(0);
-        }
+      /* Animasi Transisi Halus */
+      .panel {
+        transition: all 0.3s ease-in-out;
+        opacity: 0;
+        transform: translateY(10px);
+        display: none; /* Default hidden controlled by JS classes but augmented by CSS */
+      }
 
-        /* Custom Scrollbar for Student Info */
-        .custom-scrollbar::-webkit-scrollbar {
-            width: 4px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-            background-color: #cbd5e1;
-            border-radius: 4px;
-        }
+      .panel.active {
+        display: block;
+        opacity: 1;
+        transform: translateY(0);
+      }
 
-        /* Spinner Animation */
-        .loader {
-            width: 48px;
-            height: 48px;
-            border: 5px solid #FFF;
-            border-bottom-color: transparent;
-            border-radius: 50%;
-            display: inline-block;
-            box-sizing: border-box;
-            animation: rotation 1s linear infinite;
-        }
+      /* Custom Scrollbar for Student Info */
+      .custom-scrollbar::-webkit-scrollbar {
+        width: 4px;
+      }
+      .custom-scrollbar::-webkit-scrollbar-thumb {
+        background-color: #cbd5e1;
+        border-radius: 4px;
+      }
 
-        @keyframes rotation {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+      /* Spinner Animation */
+      .loader {
+        width: 48px;
+        height: 48px;
+        border: 5px solid #fff;
+        border-bottom-color: transparent;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        animation: rotation 1s linear infinite;
+      }
+
+      @keyframes rotation {
+        0% {
+          transform: rotate(0deg);
         }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
     </style>
-</head>
+  </head>
 
-<!-- Background Gradient sama seperti Flutter -->
-<body class="bg-gradient-to-b from-indigo-700 to-indigo-50 min-h-screen flex items-center justify-center p-4">
-
+  <!-- Background Gradient sama seperti Flutter -->
+  <body
+    class="bg-gradient-to-b from-indigo-700 to-indigo-50 min-h-screen flex items-center justify-center p-4"
+  >
     <!-- Main Card -->
-    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden relative">
-        
-        <!-- Hiasan Header (Top Decor) -->
-        <div class="h-24 bg-indigo-600 absolute top-0 left-0 w-full z-0"></div>
+    <div
+      class="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden relative"
+    >
+      <!-- Hiasan Header (Top Decor) -->
+      <div class="h-24 bg-indigo-600 absolute top-0 left-0 w-full z-0"></div>
 
-        <div class="relative z-10 px-6 pb-8">
-            
-            <!-- Header Section -->
-            <div class="flex flex-col items-center mt-8 mb-6">
-                <!-- Logo Container dengan Shadow -->
-                <div class="w-28 h-28 bg-white rounded-full shadow-lg flex items-center justify-center p-2 mb-4 border-4 border-indigo-50">
-                    <img src="logo yppmu 200x200.png" 
-                         alt="Logo Sekolah" 
-                         class="w-full h-full object-contain"
-                         onerror="this.src='https://ui-avatars.com/api/?name=NF&background=random&size=128'"> <!-- Fallback jika gambar rusak -->
-                </div>
+      <div class="relative z-10 px-6 pb-8">
+        <!-- Header Section -->
+        <div class="flex flex-col items-center mt-8 mb-6">
+          <!-- Logo Container dengan Shadow -->
+          <div
+            class="w-28 h-28 bg-white rounded-full shadow-lg flex items-center justify-center p-2 mb-4 border-4 border-indigo-50"
+          >
+            <img
+              src="logo yppmu 200x200.png"
+              alt="Logo Sekolah"
+              class="w-full h-full object-contain"
+              onerror="
+                this.src =
+                  'https://ui-avatars.com/api/?name=NF&background=random&size=128'
+              "
+            />
+            <!-- Fallback jika gambar rusak -->
+          </div>
 
-                <div class="text-center">
-                    <h1 class="text-2xl font-bold text-gray-800 mt-2">MTs Nurul Falah</h1>
-                    <p class="text-sm text-gray-500 font-medium">Penilaian Akhir Semester (PAS) 2025/2026</p>
-                </div>
-            </div>
-
-            <!-- Panel 1: Input userId -->
-            <div id="panel1" class="panel active">
-                <div class="bg-indigo-50 rounded-xl p-5 mb-6 border border-indigo-100">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <i data-lucide="user" class="text-indigo-600 w-5 h-5"></i>
-                        <label for="userId" class="text-gray-700 font-semibold text-sm tracking-wide">ID Peserta</label>
-                    </div>
-                    
-                    <div class="relative">
-                        <input type="text" id="userId"
-                            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono placeholder-gray-400"
-                            placeholder="masukan ID Peserta">
-                    </div>
-                    <p id="userIdErrorMessage" class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"></p>
-                </div>
-
-                <button onclick="verifyUserId()"
-                    class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5 flex justify-center items-center space-x-2">
-                    <span>Verifikasi</span>
-                    <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                </button>
-            </div>
-
-            <!-- Panel 2: Informasi Siswa dan Input Kode Soal -->
-            <div id="panel2" class="panel hidden">
-                <div class="text-center mb-4">
-                    <h2 class="text-lg font-bold text-gray-800">Konfirmasi Data</h2>
-                    <p class="text-xs text-gray-500">Pastikan data di bawah ini adalah milik Anda</p>
-                </div>
-
-                <!-- Kartu Data Siswa -->
-                <div class="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-5 text-sm relative overflow-hidden">
-                    <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
-                    <div id="studentInfo" class="grid grid-cols-[100px_10px_1fr] gap-y-2 text-gray-700">
-                        <!-- Konten akan diisi JS, saya update stylingnya via JS inject atau CSS -->
-                    </div>
-                </div>
-
-                <!-- Input Kode Soal -->
-                <div class="mb-4">
-                    <label for="kodeSoal" class="block text-gray-700 font-semibold uppercase text-sm mb-2">Kode Soal</label>
-                    <div class="relative">
-                        <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                            <i data-lucide="Key" class="text-gray-400 w-4 h-4"></i>
-                        </div>
-                        <input type="text" id="kodeSoal"
-                            class="w-full pl-10 pr-4 py-3 uppercase rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all placeholder-gray-400"
-                            placeholder="Masukkan Kode Soal">
-                    </div>
-                    <p id="kodeSoalErrorMessage" class="text-red-500 text-xs mt-2 font-medium min-h-[1rem]"></p>
-                </div>
-
-                <div class="space-y-3">
-                    <button onclick="verifyKodeSoal()"
-                        class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition-all flex justify-center items-center space-x-2">
-                        <span>Mulai Ujian</span>
-                        <i data-lucide="play-circle" class="w-4 h-4"></i>
-                    </button>
-                    
-                    <button onclick="goBack()"
-                        class="w-full bg-white hover:bg-gray-50 text-gray-600 font-semibold py-3 rounded-xl border border-gray-200 transition-all flex justify-center items-center space-x-2">
-                        <i data-lucide="arrow-left" class="w-4 h-4"></i>
-                        <span>Kembali</span>
-                    </button>
-                </div>
-            </div>
-
-            <!-- Footer -->
-            <div class="mt-8 text-center">
-                <p class="text-[10px] text-gray-400">v1.0 CBT System • MTs Nurul Falah</p>
-            </div>
+          <div class="text-center">
+            <h1 class="text-2xl font-bold text-gray-800 mt-2">
+              MTs Nurul Falah
+            </h1>
+            <p class="text-sm text-gray-500 font-medium">
+              Ujian Madrasah 2025/2026
+            </p>
+          </div>
         </div>
+
+        <!-- Panel 1: Input userId -->
+        <div id="panel1" class="panel active">
+          <div
+            class="bg-indigo-50 rounded-xl p-5 mb-6 border border-indigo-100"
+          >
+            <div class="flex items-center space-x-3 mb-2">
+              <i data-lucide="user" class="text-indigo-600 w-5 h-5"></i>
+              <label
+                for="userId"
+                class="text-gray-700 font-semibold text-sm tracking-wide"
+                >ID Peserta</label
+              >
+            </div>
+
+            <div class="relative">
+              <input
+                type="text"
+                id="userId"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all text-center text-lg tracking-widest font-mono placeholder-gray-400"
+                placeholder="masukan ID Peserta"
+              />
+            </div>
+            <p
+              id="userIdErrorMessage"
+              class="text-red-500 text-xs mt-2 text-center font-medium min-h-[1rem]"
+            ></p>
+          </div>
+
+          <button
+            onclick="verifyUserId()"
+            class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3.5 rounded-xl shadow-lg hover:shadow-indigo-500/30 transition-all transform hover:-translate-y-0.5 flex justify-center items-center space-x-2"
+          >
+            <span>Verifikasi</span>
+            <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          </button>
+        </div>
+
+        <!-- Panel 2: Informasi Siswa dan Input Kode Soal -->
+        <div id="panel2" class="panel hidden">
+          <div class="text-center mb-4">
+            <h2 class="text-lg font-bold text-gray-800">Konfirmasi Data</h2>
+            <p class="text-xs text-gray-500">
+              Pastikan data di bawah ini adalah milik Anda
+            </p>
+          </div>
+
+          <!-- Kartu Data Siswa -->
+          <div
+            class="bg-gray-50 rounded-xl border border-gray-200 p-4 mb-5 text-sm relative overflow-hidden"
+          >
+            <div class="absolute top-0 left-0 w-1 h-full bg-indigo-500"></div>
+            <div
+              id="studentInfo"
+              class="grid grid-cols-[100px_10px_1fr] gap-y-2 text-gray-700"
+            >
+              <!-- Konten akan diisi JS, saya update stylingnya via JS inject atau CSS -->
+            </div>
+          </div>
+
+          <!-- Input Kode Soal -->
+          <div class="mb-4">
+            <label
+              for="kodeSoal"
+              class="block text-gray-700 font-semibold uppercase text-sm mb-2"
+              >Kode Soal</label
+            >
+            <div class="relative">
+              <div
+                class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+              >
+                <i data-lucide="Key" class="text-gray-400 w-4 h-4"></i>
+              </div>
+              <input
+                type="text"
+                id="kodeSoal"
+                class="w-full pl-10 pr-4 py-3 uppercase rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white transition-all placeholder-gray-400"
+                placeholder="Masukkan Kode Soal"
+              />
+            </div>
+            <p
+              id="kodeSoalErrorMessage"
+              class="text-red-500 text-xs mt-2 font-medium min-h-[1rem]"
+            ></p>
+          </div>
+
+          <div class="space-y-3">
+            <button
+              onclick="verifyKodeSoal()"
+              class="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl shadow-md transition-all flex justify-center items-center space-x-2"
+            >
+              <span>Mulai Ujian</span>
+              <i data-lucide="play-circle" class="w-4 h-4"></i>
+            </button>
+
+            <button
+              onclick="goBack()"
+              class="w-full bg-white hover:bg-gray-50 text-gray-600 font-semibold py-3 rounded-xl border border-gray-200 transition-all flex justify-center items-center space-x-2"
+            >
+              <i data-lucide="arrow-left" class="w-4 h-4"></i>
+              <span>Kembali</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="mt-8 text-center">
+          <p class="text-[10px] text-gray-400">
+            v1.0 CBT System • MTs Nurul Falah
+          </p>
+        </div>
+      </div>
     </div>
 
     <!-- Spinner Overlay (Modern) -->
-    <div id="spinnerOverlay"
-        class="hidden fixed inset-0 flex flex-col items-center justify-center bg-indigo-900/80 backdrop-blur-sm z-50 transition-opacity">
-        <span class="loader"></span>
-        <p class="text-white mt-4 font-medium tracking-wide animate-pulse">Memproses Data...</p>
-        <p class="text-xs text-indigo-200 mt-2">Memeriksa jadwal dan kode soal...</p>
+    <div
+      id="spinnerOverlay"
+      class="hidden fixed inset-0 flex flex-col items-center justify-center bg-indigo-900/80 backdrop-blur-sm z-50 transition-opacity"
+    >
+      <span class="loader"></span>
+      <p class="text-white mt-4 font-medium tracking-wide animate-pulse">
+        Memproses Data...
+      </p>
+      <p class="text-xs text-indigo-200 mt-2">
+        Memeriksa jadwal dan kode soal...
+      </p>
     </div>
 
     <!-- JAVASCRIPT LOGIC (TIDAK DIRUBAH LOGIKANYA) -->
     <script>
-        // Inisialisasi Ikon Lucide
-        lucide.createIcons();
+      // Inisialisasi Ikon Lucide
+      lucide.createIcons();
 
-        // --- CODE ASLI ANDA DI BAWAH INI ---
-        
-        let siswaData = [];
+      const googleScriptUrl =
+        "https://script.google.com/macros/s/AKfycbz-uJo0Ad109oOxcJZzjehFM62frcAJs5dxw6cD_Qb9N4-JpvfOYlANtE-X-0rM2crftQ/exec";
+      const json = "https://masozin.github.io/portal-cbt-mtsnf/data.json";
+      let siswaData = [];
 
-        async function loadSiswaData() {
-            try {
-                const response = await fetch('https://masozin.github.io/portal-cbt-mtsnf/data.json'); 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                siswaData = await response.json();
-                console.log('Data siswa berhasil dimuat:', siswaData);
-            } catch (error) {
-                console.error('Gagal memuat data siswa:', error);
-                alert('Pastikan file data.json tersedia dan formatnya benar.');
-            }
+      async function loadSiswaData() {
+        try {
+          const response = await fetch(json);
+          if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+          siswaData = await response.json();
+          console.log("Data siswa berhasil dimuat:", siswaData);
+        } catch (error) {
+          console.error("Gagal memuat data siswa:", error);
+          alert("Pastikan file data.json tersedia dan formatnya benar.");
+        }
+      }
+
+      function verifyUserId() {
+        const userId = document.getElementById("userId").value.trim();
+        const errorMessage = document.getElementById("userIdErrorMessage");
+        const studentInfo = document.getElementById("studentInfo");
+
+        errorMessage.textContent = "";
+        studentInfo.innerHTML = "";
+
+        if (!userId) {
+          errorMessage.textContent = "userId tidak boleh kosong.";
+          // Efek getar jika error
+          document
+            .getElementById("userId")
+            .classList.add("ring-2", "ring-red-500");
+          setTimeout(
+            () =>
+              document
+                .getElementById("userId")
+                .classList.remove("ring-2", "ring-red-500"),
+            500,
+          );
+          return;
         }
 
-        function verifyUserId() {
-            const userId = document.getElementById('userId').value.trim();
-            const errorMessage = document.getElementById('userIdErrorMessage');
-            const studentInfo = document.getElementById('studentInfo');
+        const siswa = siswaData.find((s) => s.userId === userId);
 
-            errorMessage.textContent = '';
-            studentInfo.innerHTML = '';
-
-            if (!userId) {
-                errorMessage.textContent = "userId tidak boleh kosong.";
-                // Efek getar jika error
-                document.getElementById('userId').classList.add('ring-2', 'ring-red-500');
-                setTimeout(() => document.getElementById('userId').classList.remove('ring-2', 'ring-red-500'), 500);
-                return;
-            }
-
-            const siswa = siswaData.find(s => s.userId === userId);
-
-            if (siswa) {
-                // SAYA PERBAIKI TAMPILAN INJECT HTML AGAR RAPI
-                // Menggunakan grid layout yang sudah didefinisikan di HTML
-                studentInfo.innerHTML = `
+        if (siswa) {
+          // SAYA PERBAIKI TAMPILAN INJECT HTML AGAR RAPI
+          // Menggunakan grid layout yang sudah didefinisikan di HTML
+          studentInfo.innerHTML = `
                     <div class="font-semibold text-indigo-900">Nama</div> <div>:</div> <div id="nama" class="font-medium">${siswa.nama}</div>
                     <div class="font-semibold text-indigo-900">No. Peserta</div> <div>:</div> <div id="nopes">${siswa.nopes}</div>
                     <div class="font-semibold text-indigo-900">Kelas</div> <div>:</div> <div id="kelas">${siswa.kelas}</div>
@@ -222,139 +295,155 @@
                     <div class="font-semibold text-indigo-900">TTL</div> <div>:</div> <div id="tempatlahir">${siswa.tempatLahir}, ${siswa.tanggalLahir}</div>
                 `;
 
-                // Animasi Transisi
-                const p1 = document.getElementById('panel1');
-                const p2 = document.getElementById('panel2');
-                
-                p1.classList.remove('active');
-                setTimeout(() => {
-                    p1.classList.add('hidden');
-                    p2.classList.remove('hidden');
-                    // force reflow
-                    void p2.offsetWidth; 
-                    p2.classList.add('active');
-                }, 300); // Wait for transition
-                
-            } else {
-                errorMessage.textContent = "ID Peserta tidak ditemukan / Salah.";
-                document.getElementById('userId').classList.add('ring-2', 'ring-red-500');
-                setTimeout(() => document.getElementById('userId').classList.remove('ring-2', 'ring-red-500'), 500);
+          // Animasi Transisi
+          const p1 = document.getElementById("panel1");
+          const p2 = document.getElementById("panel2");
+
+          p1.classList.remove("active");
+          setTimeout(() => {
+            p1.classList.add("hidden");
+            p2.classList.remove("hidden");
+            // force reflow
+            void p2.offsetWidth;
+            p2.classList.add("active");
+          }, 300); // Wait for transition
+        } else {
+          errorMessage.textContent = "ID Peserta tidak ditemukan / Salah.";
+          document
+            .getElementById("userId")
+            .classList.add("ring-2", "ring-red-500");
+          setTimeout(
+            () =>
+              document
+                .getElementById("userId")
+                .classList.remove("ring-2", "ring-red-500"),
+            500,
+          );
+        }
+      }
+
+      async function verifyKodeSoal() {
+        const kodeSoal = document.getElementById("kodeSoal").value.trim();
+        const userId = document.getElementById("userId").value.trim();
+
+        const kelasEl = document.getElementById("kelas");
+        const namaEl = document.getElementById("nama");
+        const nisnEl = document.getElementById("nisn");
+
+        if (!kelasEl || !namaEl || !nisnEl) return;
+
+        const kelas = kelasEl.textContent.trim();
+        const nama = namaEl.textContent.trim();
+        const nisn = nisnEl.textContent.trim();
+
+        document.getElementById("kodeSoalErrorMessage").textContent = "";
+
+        if (!kodeSoal) {
+          document.getElementById("kodeSoalErrorMessage").textContent =
+            "Kode Soal tidak boleh kosong.";
+          return;
+        }
+
+        const studentData = {
+          userId,
+          nama,
+          kelas,
+          nisn,
+        };
+
+        showSpinner();
+
+        try {
+          const response = await fetch(
+            `${googleScriptUrl}?action=getFormLink&userId=${userId}&kodeSoal=${kodeSoal}&studentData=${encodeURIComponent(JSON.stringify(studentData))}`,
+          );
+
+          const result = await response.json();
+
+          hideSpinner();
+
+          // --- FITUR DEBUGGING BARU ---
+          // Jika script mengirim data debug, tampilkan di Console Browser (Tekan F12 -> Console)
+          if (result.debug) {
+            console.group("DEBUGGING SERVER TIME");
+            result.debug.forEach((log) => console.log(log));
+            console.groupEnd();
+
+            // Opsional: Uncomment baris bawah ini jika ingin melihat log via Pop-up Alert
+            // alert(result.debug.join('\n'));
+          }
+          // -----------------------------
+
+          if (result.link) {
+            // Cek apakah Flutter/ClickDetector tersedia
+            if (typeof ClickDetector !== "undefined" && result.duration) {
+              // Kirim data durasi ke Flutter dalam format JSON String
+              // Contoh: '{"type": "START_EXAM", "duration": 5400}'
+              var message = JSON.stringify({
+                type: "START_EXAM",
+                duration: result.duration,
+              });
+              console.log("Mengirim durasi ke Flutter: " + result.duration);
+              ClickDetector.postMessage(message);
             }
+
+            console.log("Mengirim durasi ke Flutter: " + result.duration);
+
+            // Beri jeda sedikit agar Flutter sempat memproses pesan sebelum redirect
+            setTimeout(function () {
+              window.location.href = result.link;
+            }, 500);
+          } else if (result.error) {
+            document.getElementById("kodeSoalErrorMessage").textContent =
+              result.error;
+            document
+              .getElementById("kodeSoal")
+              .classList.add("ring-2", "ring-red-500");
+            setTimeout(
+              () =>
+                document
+                  .getElementById("kodeSoal")
+                  .classList.remove("ring-2", "ring-red-500"),
+              500,
+            );
+          } else {
+            document.getElementById("kodeSoalErrorMessage").textContent =
+              "Kesalahan tidak diketahui.";
+          }
+        } catch (error) {
+          console.error("Error:", error);
+          hideSpinner();
+          document.getElementById("kodeSoalErrorMessage").textContent =
+            "Terjadi kesalahan server/koneksi.";
         }
+      }
 
-        async function verifyKodeSoal() {
-            // Ganti URL ini dengan URL Deployment Baru Anda
-            const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbz-uJo0Ad109oOxcJZzjehFM62frcAJs5dxw6cD_Qb9N4-JpvfOYlANtE-X-0rM2crftQ/exec';
+      function showSpinner() {
+        document.getElementById("spinnerOverlay").classList.remove("hidden");
+      }
 
-            const kodeSoal = document.getElementById('kodeSoal').value.trim();
-            const userId = document.getElementById('userId').value.trim();
-            
-            const kelasEl = document.getElementById('kelas');
-            const namaEl = document.getElementById('nama');
-            const nisnEl = document.getElementById('nisn');
+      function hideSpinner() {
+        document.getElementById("spinnerOverlay").classList.add("hidden");
+      }
 
-            if(!kelasEl || !namaEl || !nisnEl) return; 
+      function goBack() {
+        const p1 = document.getElementById("panel1");
+        const p2 = document.getElementById("panel2");
 
-            const kelas = kelasEl.textContent.trim();
-            const nama = namaEl.textContent.trim();
-            const nisn = nisnEl.textContent.trim();
+        p2.classList.remove("active");
+        setTimeout(() => {
+          p2.classList.add("hidden");
+          p1.classList.remove("hidden");
+          void p1.offsetWidth;
+          p1.classList.add("active");
+        }, 300);
 
-            document.getElementById('kodeSoalErrorMessage').textContent = "";
+        // Reset input Kode Soal dan error message saat kembali
+        document.getElementById("kodeSoal").value = "";
+        document.getElementById("kodeSoalErrorMessage").textContent = "";
+      }
 
-            if (!kodeSoal) {
-                document.getElementById('kodeSoalErrorMessage').textContent = "Kode Soal tidak boleh kosong.";
-                return;
-            }
-
-            const studentData = {
-                userId,
-                nama,
-                kelas,
-                nisn,
-            };
-
-            showSpinner();
-
-            try {
-                const response = await fetch(
-                    `${googleScriptUrl}?action=getFormLink&userId=${userId}&kodeSoal=${kodeSoal}&studentData=${encodeURIComponent(JSON.stringify(studentData))}`
-                );
-
-                const result = await response.json();
-
-                hideSpinner();
-
-                // --- FITUR DEBUGGING BARU ---
-                // Jika script mengirim data debug, tampilkan di Console Browser (Tekan F12 -> Console)
-                if (result.debug) {
-                    console.group("DEBUGGING SERVER TIME");
-                    result.debug.forEach(log => console.log(log));
-                    console.groupEnd();
-                    
-                    // Opsional: Uncomment baris bawah ini jika ingin melihat log via Pop-up Alert
-                    // alert(result.debug.join('\n'));
-                }
-                // -----------------------------
-                
-                if (result.link) {
-                    // Cek apakah Flutter/ClickDetector tersedia
-					if (typeof ClickDetector !== 'undefined' && result.duration) {
-						// Kirim data durasi ke Flutter dalam format JSON String
-						// Contoh: '{"type": "START_EXAM", "duration": 5400}'
-						var message = JSON.stringify({
-							type: 'START_EXAM',
-							duration: result.duration
-						});
-						console.log("Mengirim durasi ke Flutter: " + result.duration);
-						ClickDetector.postMessage(message);
-					}
-
-                    console.log("Mengirim durasi ke Flutter: " + result.duration);
-
-					// Beri jeda sedikit agar Flutter sempat memproses pesan sebelum redirect
-					setTimeout(function() {
-						window.location.href = result.link;
-					}, 500);
-                } else if (result.error) {
-                    document.getElementById('kodeSoalErrorMessage').textContent = result.error;
-                    document.getElementById('kodeSoal').classList.add('ring-2', 'ring-red-500');
-                    setTimeout(() => document.getElementById('kodeSoal').classList.remove('ring-2', 'ring-red-500'), 500);
-                } else {
-                    document.getElementById('kodeSoalErrorMessage').textContent = "Kesalahan tidak diketahui.";
-                }
-            } catch (error) {
-                console.error("Error:", error);
-                hideSpinner();
-                document.getElementById('kodeSoalErrorMessage').textContent = "Terjadi kesalahan server/koneksi.";
-            }
-        }
-
-        function showSpinner() {
-            document.getElementById('spinnerOverlay').classList.remove('hidden');
-        }
-
-        function hideSpinner() {
-            document.getElementById('spinnerOverlay').classList.add('hidden');
-        }
-
-        function goBack() {
-            const p1 = document.getElementById('panel1');
-            const p2 = document.getElementById('panel2');
-
-            p2.classList.remove('active');
-            setTimeout(() => {
-                p2.classList.add('hidden');
-                p1.classList.remove('hidden');
-                void p1.offsetWidth;
-                p1.classList.add('active');
-            }, 300);
-            
-            // Reset input Kode Soal dan error message saat kembali
-            document.getElementById('kodeSoal').value = '';
-            document.getElementById('kodeSoalErrorMessage').textContent = '';
-        }
-
-        document.addEventListener('DOMContentLoaded', loadSiswaData);
+      document.addEventListener("DOMContentLoaded", loadSiswaData);
     </script>
-</body>
+  </body>
 </html>
